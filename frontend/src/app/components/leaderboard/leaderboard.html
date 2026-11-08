@@ -1,0 +1,60 @@
+<div class="page">
+  <header>
+    <h1>🏸 Leaderboard</h1>
+    <nav>
+      <a routerLink="/match-form" class="btn">+ Add Match</a>
+      <a routerLink="/history" class="btn secondary">History</a>
+      @if (auth.isAdmin()) {
+        <a routerLink="/admin" class="btn secondary">Admin</a>
+      }
+      <button class="btn danger" (click)="auth.logout()">Logout</button>
+    </nav>
+  </header>
+
+  <div class="period-row">
+    <select [(ngModel)]="selectedPeriodId" (ngModelChange)="onPeriodChange()">
+      @for (p of periods; track p.id) {
+        <option [value]="p.id">{{ p.label }} {{ p.isActive ? '(active)' : '' }}</option>
+      }
+    </select>
+  </div>
+
+  @if (loser) {
+    <div class="party-banner">
+      <span class="party-emoji">🎉</span>
+      <span class="party-text">
+        <strong>{{ loser.name }}</strong> is buying the party!
+      </span>
+      <span class="party-emoji">🎊</span>
+    </div>
+  }
+
+  <div class="card table-card">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Player</th><th>W</th><th>L</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        @for (entry of entries; track entry.id; let i = $index) {
+          <tr [class]="rowClass(i, entry)">
+            <td class="rank-cell">
+              @if (i === 0) { <span class="medal gold">🥇</span> }
+              @else if (i === 1) { <span class="medal silver">🥈</span> }
+              @else if (i === 2) { <span class="medal bronze">🥉</span> }
+              @else { <span class="rank-num">{{ i + 1 }}</span> }
+            </td>
+            <td class="player-cell">
+              @if (entry.avatarUrl) {
+                <img [src]="entry.avatarUrl" [alt]="entry.name" class="avatar" referrerpolicy="no-referrer">
+              }
+              <span class="player-name">{{ entry.name }}</span>
+            </td>
+            <td class="win">{{ entry.wins }}</td>
+            <td class="loss">{{ entry.losses }}</td>
+            <td class="score-cell" [class.negative]="entry.score < 0">{{ entry.score > 0 ? '+' + entry.score : entry.score }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

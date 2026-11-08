@@ -1,0 +1,133 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+}
+
+nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.period-row select {
+  width: 100%;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  padding-right: 2.2rem;
+}
+
+/* Party banner */
+.party-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(244,63,94,0.15));
+  border: 1px solid rgba(251,191,36,0.3);
+  animation: pulse-banner 2.5s ease-in-out infinite;
+
+  .party-emoji { font-size: 1.4rem; }
+  .party-text  { font-size: 0.95rem; font-weight: 600; }
+  strong       { color: var(--gold); }
+}
+
+@keyframes pulse-banner {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251,191,36,0); }
+  50%       { box-shadow: 0 0 20px 2px rgba(251,191,36,0.15); }
+}
+
+/* Table card */
+.table-card { overflow: hidden; padding: 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    padding: 0.65rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--border);
+    &:last-child { border-bottom: none; }
+    &:hover { background: rgba(255,255,255,0.03); }
+  }
+}
+
+/* Podium rows */
+.rank-1 { background: rgba(251,191,36,0.06); }
+.rank-2 { background: rgba(148,163,184,0.05); }
+.rank-3 { background: rgba(201,124,58,0.05); }
+.loser-row { background: rgba(244,63,94,0.07); }
+
+.rank-cell {
+  width: 48px;
+  .medal { font-size: 1.3rem; }
+  .rank-num { color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+}
+
+.player-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--border);
+}
+
+.win  { color: var(--success); font-weight: 600; }
+.loss { color: var(--danger);  font-weight: 600; }
+
+.score-cell {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--accent);
+  &.negative { color: var(--danger); }
+}
+
+/* #1 player gets a glow on the score */
+.rank-1 .score-cell {
+  text-shadow: 0 0 12px rgba(200,255,0,0.5);
+}

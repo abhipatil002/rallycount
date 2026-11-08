@@ -1,0 +1,13 @@
+# .NET
+backend/BadmintonApi/bin/
+backend/BadmintonApi/obj/
+backend/BadmintonApi/*.user
+
+# Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Env / secrets
+appsettings.Development.json
+*.env

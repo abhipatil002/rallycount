@@ -1,0 +1,72 @@
+<div class="page">
+  <header>
+    <a routerLink="/leaderboard" class="btn secondary">← Back</a>
+    <h2>Admin Panel</h2>
+  </header>
+
+  <div class="card">
+    <div class="card-header"><h3>Periods</h3></div>
+
+    <div class="new-period">
+      <input placeholder="Label (e.g. Week 1)" [(ngModel)]="newPeriod.label">
+      <select [(ngModel)]="newPeriod.frequency">
+        <option value="weekly">Weekly</option>
+        <option value="biweekly">Biweekly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+      <input type="date" [(ngModel)]="newPeriod.startDate">
+      <button class="btn" (click)="createPeriod()">Create</button>
+    </div>
+    @if (periodError) {
+      <p class="error">{{ periodError }}</p>
+    }
+
+    <table>
+      <thead><tr><th>Label</th><th>Frequency</th><th>Start</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        @for (p of periods; track p.id) {
+          <tr>
+            <td>{{ p.label }}</td>
+            <td>{{ p.frequency }}</td>
+            <td>{{ p.startDate }}</td>
+            <td>
+              @if (p.isActive) {
+                <span class="badge-active">Active</span>
+              } @else {
+                <span class="badge">Past</span>
+              }
+            </td>
+            <td>
+              @if (!p.isActive) {
+                <button class="btn secondary" (click)="activatePeriod(p.id)">Activate</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h3>Players</h3></div>
+    <table>
+      <thead><tr><th>Name</th><th>Email</th><th>Admin</th><th></th></tr></thead>
+      <tbody>
+        @for (p of players; track p.id) {
+          <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.email }}</td>
+            <td>
+              @if (p.isAdmin) {
+                <span class="badge-active">Yes</span>
+              } @else {
+                <span class="badge">No</span>
+              }
+            </td>
+            <td><button class="btn secondary" (click)="toggleAdmin(p)">Toggle</button></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

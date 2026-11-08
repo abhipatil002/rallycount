@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/BadmintonApi/BadmintonApi.csproj" />
+  </Folder>
+</Solution>

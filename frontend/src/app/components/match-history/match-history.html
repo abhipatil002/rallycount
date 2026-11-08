@@ -1,0 +1,35 @@
+<div class="page">
+  <header>
+    <a routerLink="/leaderboard" class="btn secondary">← Back</a>
+    <h2>Match History</h2>
+  </header>
+
+  <select [(ngModel)]="selectedPeriodId" (ngModelChange)="onPeriodChange()">
+    @for (p of periods; track p.id) {
+      <option [value]="p.id">{{ p.label }} {{ p.isActive ? '(active)' : '' }}</option>
+    }
+  </select>
+
+  @if (!matches.length) {
+    <p class="empty">No matches yet.</p>
+  }
+
+  <div class="match-list">
+    @for (m of matches; track m.id) {
+      <div class="match-card" [class.team1-won]="m.team1Score > m.team2Score" [class.team2-won]="m.team2Score > m.team1Score">
+        <div class="teams-row">
+          <span class="team">{{ name(m.team1P1) }} &amp; {{ name(m.team1P2) }}</span>
+          <span class="score">{{ m.team1Score }} – {{ m.team2Score }}</span>
+          <span class="team">{{ name(m.team2P1) }} &amp; {{ name(m.team2P2) }}</span>
+        </div>
+        <div class="meta">
+          <span>{{ m.playedAt | date:'MMM d, h:mm a' }}</span>
+          <span>by {{ name(m.submittedBy) }}</span>
+          @if (auth.isAdmin()) {
+            <button class="btn-delete" (click)="deleteMatch(m.id)">Delete</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
