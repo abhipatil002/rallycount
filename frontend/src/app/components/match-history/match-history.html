@@ -1,17 +1,23 @@
 <div class="page">
   <header>
     <a routerLink="/leaderboard" class="btn secondary">← Back</a>
-    <h2>Match History</h2>
+    <h2>📋 Match History</h2>
   </header>
 
-  <select [(ngModel)]="selectedPeriodId" (ngModelChange)="onPeriodChange()">
-    @for (p of periods; track p.id) {
-      <option [value]="p.id">{{ p.label }} {{ p.isActive ? '(active)' : '' }}</option>
-    }
-  </select>
+  <div class="period-row">
+    <span class="period-label">📅</span>
+    <select [(ngModel)]="selectedPeriodId" (ngModelChange)="onPeriodChange()">
+      @for (p of periods; track p.id) {
+        <option [value]="p.id">{{ p.label }} {{ p.isActive ? '(active)' : '' }}</option>
+      }
+    </select>
+  </div>
 
   @if (!matches.length) {
-    <p class="empty">No matches yet.</p>
+    <div class="empty">
+      <span>🏸</span>
+      <p>No matches yet this period.</p>
+    </div>
   }
 
   <div class="match-list">
@@ -23,10 +29,10 @@
           <span class="team">{{ name(m.team2P1) }} &amp; {{ name(m.team2P2) }}</span>
         </div>
         <div class="meta">
-          <span>{{ m.playedAt | date:'MMM d, h:mm a' }}</span>
-          <span>by {{ name(m.submittedBy) }}</span>
+          <span>🕐 {{ m.playedAt | date:'MMM d, h:mm a' }}</span>
+          <span>👤 {{ name(m.submittedBy) }}</span>
           @if (auth.isAdmin()) {
-            <button class="btn-delete" (click)="deleteMatch(m.id)">Delete</button>
+            <button class="btn-delete" (click)="deleteMatch(m.id)">🗑 Delete</button>
           }
         </div>
       </div>

@@ -1,48 +1,48 @@
 <div class="page">
   <header>
     <a routerLink="/leaderboard" class="btn secondary">← Back</a>
-    <h2>Add Match</h2>
+    <h2>🏸 Add Match</h2>
   </header>
 
-  @if (error) { <div class="error">{{ error }}</div> }
+  @if (error) { <div class="error">⚠️ {{ error }}</div> }
 
   <div class="teams">
     <div class="team-card">
-      <h3>Team 1</h3>
+      <h3>🔵 Team 1</h3>
       <select [(ngModel)]="form.team1P1">
-        <option value="">Player 1</option>
+        <option value="">👤 Player 1</option>
         @for (p of available([form.team1P2, form.team2P1, form.team2P2]); track p.id) {
           <option [value]="p.id">{{ p.name }}</option>
         }
       </select>
       <select [(ngModel)]="form.team1P2">
-        <option value="">Player 2</option>
+        <option value="">👤 Player 2</option>
         @for (p of available([form.team1P1, form.team2P1, form.team2P2]); track p.id) {
           <option [value]="p.id">{{ p.name }}</option>
         }
       </select>
-      <label>Score<input type="number" [(ngModel)]="form.team1Score" min="0"></label>
+      <label>🎯 Score<input type="number" [(ngModel)]="form.team1Score" min="0"></label>
     </div>
 
-    <div class="vs">VS</div>
+    <div class="vs">⚔️</div>
 
     <div class="team-card">
-      <h3>Team 2</h3>
+      <h3>🔴 Team 2</h3>
       <select [(ngModel)]="form.team2P1">
-        <option value="">Player 1</option>
+        <option value="">👤 Player 1</option>
         @for (p of available([form.team1P1, form.team1P2, form.team2P2]); track p.id) {
           <option [value]="p.id">{{ p.name }}</option>
         }
       </select>
       <select [(ngModel)]="form.team2P2">
-        <option value="">Player 2</option>
+        <option value="">👤 Player 2</option>
         @for (p of available([form.team1P1, form.team1P2, form.team2P1]); track p.id) {
           <option [value]="p.id">{{ p.name }}</option>
         }
       </select>
-      <label>Score<input type="number" [(ngModel)]="form.team2Score" min="0"></label>
+      <label>🎯 Score<input type="number" [(ngModel)]="form.team2Score" min="0"></label>
     </div>
   </div>
 
-  <button class="btn" (click)="submit()">Save Match</button>
+  <button class="btn" (click)="submit()">✅ Save Match</button>
 </div>

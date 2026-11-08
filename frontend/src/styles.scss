@@ -92,6 +92,11 @@ body {
     }
   }
 
+  &.cta {
+    box-shadow: 0 0 15px rgba(163,230,53,0.4);
+    &:hover { box-shadow: 0 0 24px rgba(163,230,53,0.6); }
+  }
+
   &.secondary {
     background: var(--surface);
     color: var(--text);

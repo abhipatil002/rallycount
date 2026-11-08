@@ -1,17 +1,27 @@
 <div class="page">
   <header>
-    <h1>🏸 Leaderboard</h1>
+    <h1>
+      <svg class="shuttle-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C9 2 6.5 4 6.5 6.5C6.5 8.5 7.8 10.2 9.5 11L4 20H20L14.5 11C16.2 10.2 17.5 8.5 17.5 6.5C17.5 4 15 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="12" cy="6.5" r="1.5" fill="currentColor"/>
+        <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+        <line x1="7" y1="15" x2="17" y2="15" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+        <line x1="5.5" y1="18" x2="18.5" y2="18" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+      Leaderboard
+    </h1>
     <nav>
-      <a routerLink="/match-form" class="btn">+ Add Match</a>
-      <a routerLink="/history" class="btn secondary">History</a>
+      <a routerLink="/match-form" class="btn cta">➕ Add Match</a>
+      <a routerLink="/history" class="btn secondary">📋 History</a>
       @if (auth.isAdmin()) {
-        <a routerLink="/admin" class="btn secondary">Admin</a>
+        <a routerLink="/admin" class="btn secondary">⚙️ Admin</a>
       }
-      <button class="btn danger" (click)="auth.logout()">Logout</button>
+      <button class="btn danger" (click)="auth.logout()">🚪 Logout</button>
     </nav>
   </header>
 
   <div class="period-row">
+    <span class="period-label">📅</span>
     <select [(ngModel)]="selectedPeriodId" (ngModelChange)="onPeriodChange()">
       @for (p of periods; track p.id) {
         <option [value]="p.id">{{ p.label }} {{ p.isActive ? '(active)' : '' }}</option>
@@ -32,9 +42,16 @@
   <div class="card table-card">
     <table>
       <thead>
-        <tr><th>#</th><th>Player</th><th>W</th><th>L</th><th>Score</th></tr>
+        <tr><th>#</th><th>Player</th><th>W</th><th>L</th><th class="score-header">Score</th></tr>
       </thead>
       <tbody>
+        @if (entries.length === 0) {
+          <tr><td colspan="5" class="empty-state">
+            <span class="empty-icon">🏸</span>
+            <p class="empty-title">No matches logged yet</p>
+            <p class="empty-sub">Hit <strong>+ Add Match</strong> to get started!</p>
+          </td></tr>
+        }
         @for (entry of entries; track entry.id; let i = $index) {
           <tr [class]="rowClass(i, entry)">
             <td class="rank-cell">
