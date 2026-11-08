@@ -13,13 +13,21 @@ export class LoginComponent implements OnInit {
   private auth = inject(AuthService);
 
   ngOnInit(): void {
-    google.accounts.id.initialize({
-      client_id: environment.googleClientId,
-      callback: (res: any) => this.auth.loginWithGoogle(res.credential)
-    });
-    google.accounts.id.renderButton(
-      document.getElementById('google-btn'),
-      { theme: 'outline', size: 'large', text: 'signin_with' }
-    );
+    this.initGoogle();
+  }
+
+  private initGoogle(): void {
+    if (typeof google !== 'undefined') {
+      google.accounts.id.initialize({
+        client_id: environment.googleClientId,
+        callback: (res: any) => this.auth.loginWithGoogle(res.credential)
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('google-btn'),
+        { theme: 'outline', size: 'large', text: 'signin_with' }
+      );
+    } else {
+      setTimeout(() => this.initGoogle(), 100);
+    }
   }
 }
