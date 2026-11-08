@@ -55,7 +55,10 @@ export class AdminComponent implements OnInit {
   }
 
   async toggleAdmin(player: Player): Promise<void> {
+    const action = player.isAdmin ? 'remove admin from' : 'make admin';
+    if (!confirm(`Are you sure you want to ${action} ${player.name}?`)) return;
     await this.api.put(`/api/admin/players/${player.id}/toggle-admin`);
     player.isAdmin = !player.isAdmin;
+    this.cdr.detectChanges();
   }
 }
