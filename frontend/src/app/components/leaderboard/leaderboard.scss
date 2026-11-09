@@ -163,10 +163,17 @@ table {
   &.negative { color: var(--danger); }
 }
 
-/* Score column header accent */
+/* Score/NRR column header accent */
 .score-header {
   color: var(--accent) !important;
   font-weight: 800 !important;
+}
+
+.nrr-cell {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--muted);
+  &.negative { color: var(--danger); }
 }
 
 /* #1 player gets a stronger glow on the score */

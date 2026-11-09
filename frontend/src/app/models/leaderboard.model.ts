@@ -3,6 +3,7 @@ export interface LeaderboardEntry {
   name: string;
   avatarUrl?: string;
   score: number;
+  nrr: number;
   wins: number;
   losses: number;
   matchesPlayed: number;

@@ -42,7 +42,7 @@
   <div class="card table-card">
     <table>
       <thead>
-        <tr><th>#</th><th>Player</th><th>W</th><th>L</th><th class="score-header">Score</th></tr>
+        <tr><th>#</th><th>Player</th><th>W</th><th>L</th><th class="score-header">Pts</th><th class="score-header">NRR</th></tr>
       </thead>
       <tbody>
         @if (entries.length === 0) {
@@ -69,6 +69,7 @@
             <td class="win">{{ entry.wins }}</td>
             <td class="loss">{{ entry.losses }}</td>
             <td class="score-cell" [class.negative]="entry.score < 0">{{ entry.score > 0 ? '+' + entry.score : entry.score }}</td>
+            <td class="nrr-cell" [class.negative]="entry.nrr < 0">{{ entry.nrr > 0 ? '+' + entry.nrr : entry.nrr }}</td>
           </tr>
         }
       </tbody>
