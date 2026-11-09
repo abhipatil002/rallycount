@@ -16,22 +16,22 @@ public class LeaderboardRepository(IConfiguration config)
                 SELECT period_id, team1_p1 AS player_id,
                     CASE WHEN team1_score > team2_score THEN 1
                          WHEN team1_score < team2_score THEN -1 ELSE 0 END AS points
-                FROM matches
+                FROM matches WHERE deleted_at IS NULL
                 UNION ALL
                 SELECT period_id, team1_p2,
                     CASE WHEN team1_score > team2_score THEN 1
                          WHEN team1_score < team2_score THEN -1 ELSE 0 END
-                FROM matches
+                FROM matches WHERE deleted_at IS NULL
                 UNION ALL
                 SELECT period_id, team2_p1,
                     CASE WHEN team2_score > team1_score THEN 1
                          WHEN team2_score < team1_score THEN -1 ELSE 0 END
-                FROM matches
+                FROM matches WHERE deleted_at IS NULL
                 UNION ALL
                 SELECT period_id, team2_p2,
                     CASE WHEN team2_score > team1_score THEN 1
                          WHEN team2_score < team1_score THEN -1 ELSE 0 END
-                FROM matches
+                FROM matches WHERE deleted_at IS NULL
               )
               SELECT p.id, p.name, p.avatar_url,
                      COALESCE(SUM(pr.points), 0)                              AS score,

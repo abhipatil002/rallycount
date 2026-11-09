@@ -9,6 +9,8 @@ export interface Match {
   team2Score: number;
   playedAt: string;
   submittedBy: string;
+  deletedAt?: string;
+  deletedBy?: string;
 }
 
 export interface CreateMatchDto {

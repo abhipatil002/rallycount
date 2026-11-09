@@ -22,7 +22,7 @@
 
   <div class="match-list">
     @for (m of matches; track m.id) {
-      <div class="match-card" [class.team1-won]="m.team1Score > m.team2Score" [class.team2-won]="m.team2Score > m.team1Score">
+      <div class="match-card" [class.team1-won]="!m.deletedAt && m.team1Score > m.team2Score" [class.team2-won]="!m.deletedAt && m.team2Score > m.team1Score" [class.deleted]="m.deletedAt">
         <div class="teams-row">
           <span class="team">{{ name(m.team1P1) }} &amp; {{ name(m.team1P2) }}</span>
           <span class="score">{{ m.team1Score }} – {{ m.team2Score }}</span>
@@ -31,7 +31,9 @@
         <div class="meta">
           <span>🕐 {{ m.playedAt | date:'MMM d, h:mm a' }}</span>
           <span>👤 {{ name(m.submittedBy) }}</span>
-          @if (auth.isAdmin()) {
+          @if (m.deletedAt) {
+            <span class="deleted-badge">🗑 Deleted by {{ name(m.deletedBy!) }}</span>
+          } @else if (auth.isAdmin()) {
             <button class="btn-delete" (click)="deleteMatch(m.id)">🗑 Delete</button>
           }
         </div>

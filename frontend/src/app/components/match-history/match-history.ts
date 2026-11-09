@@ -52,9 +52,9 @@ export class MatchHistoryComponent implements OnInit {
   }
 
   async deleteMatch(id: string): Promise<void> {
-    if (!confirm('Delete this match?')) return;
+    if (!confirm('Delete this match? It will remain visible but won\'t count towards scores.')) return;
     await this.matchService.deleteMatch(id);
-    this.matches = this.matches.filter(m => m.id !== id);
+    await this.loadMatches();
     this.cdr.detectChanges();
   }
 }

@@ -38,7 +38,8 @@ public class MatchesController(
     {
         var match = await matches.GetById(id);
         if (match is null) return NotFound();
-        await matches.Delete(id);
+        var deletedBy = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        await matches.Delete(id, deletedBy);
 
         var board = await leaderboard.GetByPeriod(match.PeriodId);
         await hub.Clients.Group(match.PeriodId.ToString()).SendAsync("LeaderboardUpdated", board);

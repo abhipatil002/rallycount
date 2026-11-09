@@ -12,4 +12,6 @@ public class Match
     public int Team2Score { get; set; }
     public DateTime PlayedAt { get; set; }
     public Guid SubmittedBy { get; set; }
+    public DateTime? DeletedAt { get; set; }
+    public Guid? DeletedBy { get; set; }
 }

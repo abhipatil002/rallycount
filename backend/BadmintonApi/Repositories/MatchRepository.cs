@@ -32,9 +32,11 @@ public class MatchRepository(IConfiguration config)
         return await conn.QueryFirstOrDefaultAsync<Match>("SELECT * FROM matches WHERE id = @id", new { id });
     }
 
-    public async Task Delete(Guid id)
+    public async Task Delete(Guid id, Guid deletedBy)
     {
         using var conn = Conn();
-        await conn.ExecuteAsync("DELETE FROM matches WHERE id = @id", new { id });
+        await conn.ExecuteAsync(
+            "UPDATE matches SET deleted_at = NOW(), deleted_by = @deletedBy WHERE id = @id",
+            new { id, deletedBy });
     }
 }

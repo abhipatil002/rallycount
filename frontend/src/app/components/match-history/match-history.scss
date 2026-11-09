@@ -76,6 +76,20 @@ select {
   align-items: center;
 }
 
+.match-card.deleted {
+  opacity: 0.5;
+  border-left-color: var(--muted) !important;
+  .teams-row { text-decoration: line-through; color: var(--muted); }
+  .score { color: var(--muted); }
+}
+
+.deleted-badge {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--danger);
+  opacity: 0.8;
+}
+
 .btn-delete {
   margin-left: auto;
   background: rgba(244,63,94,0.1);
