@@ -47,7 +47,10 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   }
 
   get loser(): LeaderboardEntry | null {
-    return this.entries.length ? this.entries[this.entries.length - 1] : null;
+    if (this.entries.length < 2) return null;
+    const last = this.entries[this.entries.length - 1];
+    const first = this.entries[0];
+    return last.score < first.score ? last : null;
   }
 
   rowClass(i: number, entry: LeaderboardEntry): string {
