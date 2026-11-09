@@ -21,52 +21,56 @@
       <p class="error">⚠️ {{ periodError }}</p>
     }
 
-    <table>
-      <thead><tr><th>Label</th><th>Frequency</th><th>Start</th><th>Status</th><th></th></tr></thead>
-      <tbody>
-        @for (p of periods; track p.id) {
-          <tr>
-            <td>{{ p.label }}</td>
-            <td>{{ p.frequency }}</td>
-            <td>{{ p.startDate }}</td>
-            <td>
-              @if (p.isActive) {
-                <span class="badge-active">✅ Active</span>
-              } @else {
-                <span class="badge">⏱ Past</span>
-              }
-            </td>
-            <td>
-              @if (!p.isActive) {
-                <button class="btn secondary" (click)="activatePeriod(p.id)">⚡ Activate</button>
-              }
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Label</th><th class="hide-mobile">Frequency</th><th>Start</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          @for (p of periods; track p.id) {
+            <tr>
+              <td>{{ p.label }}</td>
+              <td class="hide-mobile">{{ p.frequency }}</td>
+              <td>{{ p.startDate }}</td>
+              <td>
+                @if (p.isActive) {
+                  <span class="badge-active">✅ Active</span>
+                } @else {
+                  <span class="badge">⏱ Past</span>
+                }
+              </td>
+              <td>
+                @if (!p.isActive) {
+                  <button class="btn secondary" (click)="activatePeriod(p.id)">⚡ Activate</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="card">
     <div class="card-header"><h3>👥 Players</h3></div>
-    <table>
-      <thead><tr><th>Name</th><th>Email</th><th>Admin</th><th></th></tr></thead>
-      <tbody>
-        @for (p of players; track p.id) {
-          <tr>
-            <td>{{ p.name }}</td>
-            <td>{{ p.email }}</td>
-            <td>
-              @if (p.isAdmin) {
-                <span class="badge-active">🛡 Yes</span>
-              } @else {
-                <span class="badge">— No</span>
-              }
-            </td>
-            <td><button class="btn secondary" (click)="toggleAdmin(p)">🔄 Toggle</button></td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Name</th><th class="hide-mobile">Email</th><th>Admin</th><th></th></tr></thead>
+        <tbody>
+          @for (p of players; track p.id) {
+            <tr>
+              <td>{{ p.name }}</td>
+              <td class="hide-mobile email-cell">{{ p.email }}</td>
+              <td>
+                @if (p.isAdmin) {
+                  <span class="badge-active">🛡 Yes</span>
+                } @else {
+                  <span class="badge">— No</span>
+                }
+              </td>
+              <td><button class="btn secondary" (click)="toggleAdmin(p)">🔄 Toggle</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
