@@ -41,7 +41,7 @@ public class LeaderboardRepository(IConfiguration config)
               FROM players p
               LEFT JOIN player_results pr ON p.id = pr.player_id AND pr.period_id = @periodId
               GROUP BY p.id, p.name, p.avatar_url
-              ORDER BY score ASC, losses DESC",
+              ORDER BY score DESC, wins DESC",
             new { periodId });
     }
 }
