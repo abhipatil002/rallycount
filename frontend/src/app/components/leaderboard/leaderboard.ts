@@ -40,6 +40,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
 
   async onPeriodChange(): Promise<void> {
     await this.loadLeaderboard();
+    this.cdr.detectChanges();
   }
 
   private async loadLeaderboard(): Promise<void> {

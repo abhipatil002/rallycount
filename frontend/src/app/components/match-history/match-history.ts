@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -18,6 +18,7 @@ import { Period } from '../../models/period.model';
 export class MatchHistoryComponent implements OnInit {
   private matchService = inject(MatchService);
   private lbService = inject(LeaderboardService);
+  private cdr = inject(ChangeDetectorRef);
   auth = inject(AuthService);
 
   matches: Match[] = [];
@@ -34,9 +35,13 @@ export class MatchHistoryComponent implements OnInit {
     if (!active) return;
     this.selectedPeriodId = active.id;
     await this.loadMatches();
+    this.cdr.detectChanges();
   }
 
-  async onPeriodChange(): Promise<void> { await this.loadMatches(); }
+  async onPeriodChange(): Promise<void> {
+    await this.loadMatches();
+    this.cdr.detectChanges();
+  }
 
   private async loadMatches(): Promise<void> {
     this.matches = await this.matchService.getMatches(this.selectedPeriodId);
@@ -47,7 +52,9 @@ export class MatchHistoryComponent implements OnInit {
   }
 
   async deleteMatch(id: string): Promise<void> {
+    if (!confirm('Delete this match?')) return;
     await this.matchService.deleteMatch(id);
     this.matches = this.matches.filter(m => m.id !== id);
+    this.cdr.detectChanges();
   }
 }

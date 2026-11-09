@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -16,6 +16,7 @@ export class MatchFormComponent implements OnInit {
   private matchService = inject(MatchService);
   private lbService = inject(LeaderboardService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   players: Player[] = [];
   activePeriodId = '';
@@ -27,6 +28,7 @@ export class MatchFormComponent implements OnInit {
     [this.players] = await Promise.all([this.matchService.getPlayers()]);
     const periods = await this.lbService.getPeriods();
     this.activePeriodId = periods.find(p => p.isActive)?.id ?? '';
+    this.cdr.detectChanges();
   }
 
   get selectedIds(): string[] {
@@ -41,9 +43,15 @@ export class MatchFormComponent implements OnInit {
     const { team1P1, team1P2, team2P1, team2P2, team1Score, team2Score } = this.form;
     const ids = [team1P1, team1P2, team2P1, team2P2];
     if (ids.some(id => !id) || new Set(ids).size < 4) {
-      this.error = 'Select 4 distinct players.'; return;
+      this.error = 'Select 4 distinct players.';
+      this.cdr.detectChanges();
+      return;
     }
-    if (!this.activePeriodId) { this.error = 'No active period. Ask admin to create one.'; return; }
+    if (!this.activePeriodId) {
+      this.error = 'No active period. Ask admin to create one.';
+      this.cdr.detectChanges();
+      return;
+    }
     await this.matchService.createMatch({ periodId: this.activePeriodId, team1P1, team1P2, team2P1, team2P2, team1Score, team2Score });
     this.router.navigate(['/leaderboard']);
   }
