@@ -56,10 +56,12 @@ export class MatchHistoryComponent implements OnInit {
   startEdit(m: Match): void {
     this.editingId = m.id;
     this.editScores = { team1Score: m.team1Score, team2Score: m.team2Score };
+    this.cdr.detectChanges();
   }
 
   cancelEdit(): void {
     this.editingId = null;
+    this.cdr.detectChanges();
   }
 
   async saveEdit(m: Match): Promise<void> {
