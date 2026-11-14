@@ -7,7 +7,7 @@
   @if (error) { <div class="error">⚠️ {{ error }}</div> }
 
   <div class="teams">
-    <div class="team-card">
+    <div class="team-card" [class.winner]="form.winner === '1'" [class.loser]="form.winner === '2'">
       <h3>🔵 Team 1</h3>
       <select [(ngModel)]="form.team1P1">
         <option value="">👤 Player 1</option>
@@ -21,12 +21,11 @@
           <option [value]="p.id">{{ p.name }}</option>
         }
       </select>
-      <label>🎯 Score<input type="number" [(ngModel)]="form.team1Score" min="0"></label>
     </div>
 
     <div class="vs">⚔️</div>
 
-    <div class="team-card">
+    <div class="team-card" [class.winner]="form.winner === '2'" [class.loser]="form.winner === '1'">
       <h3>🔴 Team 2</h3>
       <select [(ngModel)]="form.team2P1">
         <option value="">👤 Player 1</option>
@@ -40,8 +39,20 @@
           <option [value]="p.id">{{ p.name }}</option>
         }
       </select>
-      <label>🎯 Score<input type="number" [(ngModel)]="form.team2Score" min="0"></label>
     </div>
+  </div>
+
+  <div class="winner-row">
+    <span class="winner-label">🏆 Who won?</span>
+    <div class="winner-btns">
+      <button class="winner-btn team1" [class.active]="form.winner === '1'" (click)="form.winner = '1'">🔵 Team 1</button>
+      <button class="winner-btn team2" [class.active]="form.winner === '2'" (click)="form.winner = '2'">🔴 Team 2</button>
+    </div>
+  </div>
+
+  <div class="loser-score-row">
+    <label>📉 Loser's score</label>
+    <input type="number" [(ngModel)]="form.loserScore" min="0" placeholder="0">
   </div>
 
   <div class="match-point-row">

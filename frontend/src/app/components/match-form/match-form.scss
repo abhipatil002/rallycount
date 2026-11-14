@@ -49,19 +49,73 @@ header { display: flex; align-items: center; gap: 1rem; h2 { margin: 0; } }
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 
   h3 { margin: 0; font-size: 1rem; }
+  select { width: 100%; box-sizing: border-box; }
 
-  select, input { width: 100%; box-sizing: border-box; }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-weight: 600;
+  &.winner {
+    border-color: var(--success, #22c55e);
+    box-shadow: 0 0 0 1px rgba(34,197,94,0.2);
   }
+  &.loser {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 1px rgba(244,63,94,0.15);
+    opacity: 0.7;
+  }
+}
+
+.winner-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.winner-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.winner-btns {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.winner-btn {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &.team1.active {
+    background: rgba(34,197,94,0.15);
+    border-color: rgba(34,197,94,0.5);
+    color: #22c55e;
+  }
+  &.team2.active {
+    background: rgba(34,197,94,0.15);
+    border-color: rgba(34,197,94,0.5);
+    color: #22c55e;
+  }
+  &:not(.active):hover { background: rgba(255,255,255,0.05); }
+}
+
+.loser-score-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  label { font-size: 0.88rem; font-weight: 600; white-space: nowrap; }
+  input { flex: 1; }
 }
 
 .match-point-row {

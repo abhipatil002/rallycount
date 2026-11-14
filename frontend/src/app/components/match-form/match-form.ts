@@ -23,7 +23,7 @@ export class MatchFormComponent implements OnInit {
   matchPointConfigs: number[] = [];
   error = '';
 
-  form = { team1P1: '', team1P2: '', team2P1: '', team2P2: '', team1Score: 0, team2Score: 0, matchPoint: 20 };
+  form = { team1P1: '', team1P2: '', team2P1: '', team2P2: '', winner: '' as '1' | '2' | '', loserScore: 0, matchPoint: 20 };
   submitting = false;
 
   async ngOnInit(): Promise<void> {
@@ -49,10 +49,15 @@ export class MatchFormComponent implements OnInit {
 
   async submit(): Promise<void> {
     if (this.submitting) return;
-    const { team1P1, team1P2, team2P1, team2P2, team1Score, team2Score } = this.form;
+    const { team1P1, team1P2, team2P1, team2P2, winner, loserScore, matchPoint } = this.form;
     const ids = [team1P1, team1P2, team2P1, team2P2];
     if (ids.some(id => !id) || new Set(ids).size < 4) {
       this.error = 'Select 4 distinct players.';
+      this.cdr.detectChanges();
+      return;
+    }
+    if (!winner) {
+      this.error = 'Select the winning team.';
       this.cdr.detectChanges();
       return;
     }
@@ -61,8 +66,10 @@ export class MatchFormComponent implements OnInit {
       this.cdr.detectChanges();
       return;
     }
+    const team1Score = winner === '1' ? matchPoint : loserScore;
+    const team2Score = winner === '2' ? matchPoint : loserScore;
     this.submitting = true;
-    await this.matchService.createMatch({ periodId: this.activePeriodId, team1P1, team1P2, team2P1, team2P2, team1Score, team2Score, matchPoint: this.form.matchPoint });
+    await this.matchService.createMatch({ periodId: this.activePeriodId, team1P1, team1P2, team2P1, team2P2, team1Score, team2Score, matchPoint });
     this.router.navigate(['/leaderboard']);
   }
 }
