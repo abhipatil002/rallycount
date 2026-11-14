@@ -20,13 +20,21 @@ export class MatchFormComponent implements OnInit {
 
   players: Player[] = [];
   activePeriodId = '';
+  matchPointConfigs: number[] = [];
   error = '';
 
-  form = { team1P1: '', team1P2: '', team2P1: '', team2P2: '', team1Score: 0, team2Score: 0 };
+  form = { team1P1: '', team1P2: '', team2P1: '', team2P2: '', team1Score: 0, team2Score: 0, matchPoint: 20 };
+  submitting = false;
 
   async ngOnInit(): Promise<void> {
-    [this.players] = await Promise.all([this.matchService.getPlayers()]);
-    const periods = await this.lbService.getPeriods();
+    const [players, configs, periods] = await Promise.all([
+      this.matchService.getPlayers(),
+      this.matchService.getMatchPointConfigs(),
+      this.lbService.getPeriods()
+    ]);
+    this.players = players;
+    this.matchPointConfigs = configs;
+    this.form.matchPoint = configs[0] ?? 20;
     this.activePeriodId = periods.find(p => p.isActive)?.id ?? '';
     this.cdr.detectChanges();
   }
@@ -40,6 +48,7 @@ export class MatchFormComponent implements OnInit {
   }
 
   async submit(): Promise<void> {
+    if (this.submitting) return;
     const { team1P1, team1P2, team2P1, team2P2, team1Score, team2Score } = this.form;
     const ids = [team1P1, team1P2, team2P1, team2P2];
     if (ids.some(id => !id) || new Set(ids).size < 4) {
@@ -52,7 +61,8 @@ export class MatchFormComponent implements OnInit {
       this.cdr.detectChanges();
       return;
     }
-    await this.matchService.createMatch({ periodId: this.activePeriodId, team1P1, team1P2, team2P1, team2P2, team1Score, team2Score });
+    this.submitting = true;
+    await this.matchService.createMatch({ periodId: this.activePeriodId, team1P1, team1P2, team2P1, team2P2, team1Score, team2Score, matchPoint: this.form.matchPoint });
     this.router.navigate(['/leaderboard']);
   }
 }

@@ -22,18 +22,22 @@ export class AdminComponent implements OnInit {
 
   periods: Period[] = [];
   players: Player[] = [];
+  matchPointConfigs: number[] = [];
 
   newPeriod = { label: '', frequency: 'weekly', startDate: '' };
   periodError = '';
+  newMatchPoint: number | null = null;
+  matchPointError = '';
 
   async ngOnInit(): Promise<void> {
     await this.refresh();
   }
 
   private async refresh(): Promise<void> {
-    [this.periods, this.players] = await Promise.all([
+    [this.periods, this.players, this.matchPointConfigs] = await Promise.all([
       this.lbService.getPeriods(),
-      this.matchService.getPlayers()
+      this.matchService.getPlayers(),
+      this.matchService.getMatchPointConfigs()
     ]);
     this.cdr.detectChanges();
   }
@@ -51,6 +55,15 @@ export class AdminComponent implements OnInit {
   async activatePeriod(id: string): Promise<void> {
     await this.api.put(`/api/admin/periods/${id}/activate`);
     this.periods = await this.lbService.getPeriods();
+    this.cdr.detectChanges();
+  }
+
+  async createMatchPointConfig(): Promise<void> {
+    this.matchPointError = '';
+    if (!this.newMatchPoint || this.newMatchPoint < 1) { this.matchPointError = 'Enter a valid point value.'; return; }
+    await this.api.post('/api/admin/match-point-configs', { value: this.newMatchPoint });
+    this.newMatchPoint = null;
+    this.matchPointConfigs = await this.matchService.getMatchPointConfigs();
     this.cdr.detectChanges();
   }
 

@@ -90,16 +90,64 @@ select {
   opacity: 0.8;
 }
 
-.btn-delete {
+.match-actions, .edit-actions {
   margin-left: auto;
-  background: rgba(244,63,94,0.1);
-  border: 1px solid rgba(244,63,94,0.3);
-  color: var(--danger);
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-edit, .btn-delete, .btn-save, .btn-cancel {
   padding: 0.2rem 0.6rem;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.75rem;
   font-family: inherit;
   transition: background 0.15s;
+}
+
+.btn-delete {
+  background: rgba(244,63,94,0.1);
+  border: 1px solid rgba(244,63,94,0.3);
+  color: var(--danger);
   &:hover { background: rgba(244,63,94,0.25); }
+}
+
+.btn-edit {
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.3);
+  color: var(--accent, #6366f1);
+  &:hover { background: rgba(99,102,241,0.25); }
+}
+
+.btn-save {
+  background: rgba(34,197,94,0.1);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: var(--success, #22c55e);
+  &:hover { background: rgba(34,197,94,0.25); }
+}
+
+.btn-cancel {
+  background: rgba(107,114,128,0.1);
+  border: 1px solid rgba(107,114,128,0.3);
+  color: var(--muted);
+  &:hover { background: rgba(107,114,128,0.25); }
+}
+
+.score-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 800;
+}
+
+.score-input {
+  width: 3.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0.1rem 0.3rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
 }

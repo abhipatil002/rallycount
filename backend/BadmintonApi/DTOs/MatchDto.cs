@@ -7,5 +7,10 @@ public record CreateMatchDto(
     Guid Team2P1,
     Guid Team2P2,
     int Team1Score,
-    int Team2Score
+    int Team2Score,
+    int MatchPoint = 20
 );
+
+public record UpdateMatchDto(int Team1Score, int Team2Score);
+
+public record CreateMatchPointConfigDto(int Value);

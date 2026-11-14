@@ -7,6 +7,7 @@ export interface Match {
   team2P2: string;
   team1Score: number;
   team2Score: number;
+  matchPoint: number;
   playedAt: string;
   submittedBy: string;
   deletedAt?: string;
@@ -21,4 +22,5 @@ export interface CreateMatchDto {
   team2P2: string;
   team1Score: number;
   team2Score: number;
+  matchPoint: number;
 }

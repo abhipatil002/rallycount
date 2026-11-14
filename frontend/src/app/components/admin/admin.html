@@ -50,6 +50,30 @@
   </div>
 
   <div class="card">
+    <div class="card-header"><h3>🎯 Match Point Configs</h3></div>
+    <div class="new-period">
+      <input type="number" placeholder="e.g. 25" [(ngModel)]="newMatchPoint" min="1">
+      <button class="btn" (click)="createMatchPointConfig()">➕ Add</button>
+    </div>
+    @if (matchPointError) {
+      <p class="error">⚠️ {{ matchPointError }}</p>
+    }
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Match Point</th><th>Label</th></tr></thead>
+        <tbody>
+          @for (c of matchPointConfigs; track c) {
+            <tr>
+              <td>{{ c }}</td>
+              <td><span class="badge">{{ c }}-{{ c }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
     <div class="card-header"><h3>👥 Players</h3></div>
     <div class="table-wrap">
       <table>

@@ -16,7 +16,8 @@ public class LeaderboardRepository(IConfiguration config)
                 SELECT period_id, team1_p1 AS player_id,
                     CASE WHEN team1_score > team2_score THEN 1
                          WHEN team1_score < team2_score THEN -1 ELSE 0 END AS points,
-                    team1_score - team2_score AS nrr,
+                    CASE WHEN team1_score >= match_point AND team2_score >= match_point THEN 0
+                         ELSE team1_score - team2_score END AS nrr,
                     CASE WHEN team1_score > team2_score THEN 1 ELSE 0 END AS is_win,
                     CASE WHEN team1_score < team2_score THEN 1 ELSE 0 END AS is_loss
                 FROM matches WHERE deleted_at IS NULL
@@ -24,7 +25,8 @@ public class LeaderboardRepository(IConfiguration config)
                 SELECT period_id, team1_p2,
                     CASE WHEN team1_score > team2_score THEN 1
                          WHEN team1_score < team2_score THEN -1 ELSE 0 END,
-                    team1_score - team2_score,
+                    CASE WHEN team1_score >= match_point AND team2_score >= match_point THEN 0
+                         ELSE team1_score - team2_score END,
                     CASE WHEN team1_score > team2_score THEN 1 ELSE 0 END,
                     CASE WHEN team1_score < team2_score THEN 1 ELSE 0 END
                 FROM matches WHERE deleted_at IS NULL
@@ -32,7 +34,8 @@ public class LeaderboardRepository(IConfiguration config)
                 SELECT period_id, team2_p1,
                     CASE WHEN team2_score > team1_score THEN 1
                          WHEN team2_score < team1_score THEN -1 ELSE 0 END,
-                    team2_score - team1_score,
+                    CASE WHEN team1_score >= match_point AND team2_score >= match_point THEN 0
+                         ELSE team2_score - team1_score END,
                     CASE WHEN team2_score > team1_score THEN 1 ELSE 0 END,
                     CASE WHEN team2_score < team1_score THEN 1 ELSE 0 END
                 FROM matches WHERE deleted_at IS NULL
@@ -40,7 +43,8 @@ public class LeaderboardRepository(IConfiguration config)
                 SELECT period_id, team2_p2,
                     CASE WHEN team2_score > team1_score THEN 1
                          WHEN team2_score < team1_score THEN -1 ELSE 0 END,
-                    team2_score - team1_score,
+                    CASE WHEN team1_score >= match_point AND team2_score >= match_point THEN 0
+                         ELSE team2_score - team1_score END,
                     CASE WHEN team2_score > team1_score THEN 1 ELSE 0 END,
                     CASE WHEN team2_score < team1_score THEN 1 ELSE 0 END
                 FROM matches WHERE deleted_at IS NULL

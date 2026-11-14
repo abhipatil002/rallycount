@@ -55,6 +55,7 @@ builder.Services.AddScoped<PlayerRepository>();
 builder.Services.AddScoped<MatchRepository>();
 builder.Services.AddScoped<PeriodRepository>();
 builder.Services.AddScoped<LeaderboardRepository>();
+builder.Services.AddScoped<MatchPointConfigRepository>();
 builder.Services.AddSingleton<TokenService>();
 
 var app = builder.Build();

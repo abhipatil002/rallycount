@@ -32,8 +32,20 @@ public class MatchesController(
         return CreatedAtAction(nameof(GetByPeriod), new { periodId = dto.PeriodId }, match);
     }
 
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateMatchDto dto)
+    {
+        var match = await matches.GetById(id);
+        if (match is null) return NotFound();
+        await matches.Update(id, dto);
+
+        var board = await leaderboard.GetByPeriod(match.PeriodId);
+        await hub.Clients.Group(match.PeriodId.ToString()).SendAsync("LeaderboardUpdated", board);
+
+        return NoContent();
+    }
+
     [HttpDelete("{id:guid}")]
-    [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var match = await matches.GetById(id);

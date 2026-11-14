@@ -44,5 +44,14 @@
     </div>
   </div>
 
-  <button class="btn" (click)="submit()">✅ Save Match</button>
+  <div class="match-point-row">
+    <label>🎯 Match Point</label>
+    <select [(ngModel)]="form.matchPoint">
+      @for (c of matchPointConfigs; track c) {
+        <option [value]="c">{{ c }}-{{ c }}</option>
+      }
+    </select>
+  </div>
+
+  <button class="btn" (click)="submit()" [disabled]="submitting">{{ submitting ? 'Saving…' : '✅ Save Match' }}</button>
 </div>

@@ -8,7 +8,7 @@ namespace BadmintonApi.Controllers;
 [ApiController]
 [Route("api/admin")]
 [Authorize(Policy = "AdminOnly")]
-public class AdminController(PeriodRepository periods, PlayerRepository players) : ControllerBase
+public class AdminController(PeriodRepository periods, PlayerRepository players, MatchPointConfigRepository matchPointConfigs) : ControllerBase
 {
     [HttpGet("periods")]
     public async Task<IActionResult> GetPeriods() => Ok(await periods.GetAll());
@@ -31,6 +31,17 @@ public class AdminController(PeriodRepository periods, PlayerRepository players)
         if (period is null) return NotFound();
         await periods.Activate(id);
         return NoContent();
+    }
+
+    [HttpGet("match-point-configs")]
+    public async Task<IActionResult> GetMatchPointConfigs() => Ok(await matchPointConfigs.GetAll());
+
+    [HttpPost("match-point-configs")]
+    public async Task<IActionResult> CreateMatchPointConfig([FromBody] CreateMatchPointConfigDto dto)
+    {
+        if (dto.Value < 1) return BadRequest("Value must be positive.");
+        var value = await matchPointConfigs.Create(dto.Value);
+        return Ok(value);
     }
 
     [HttpGet("players")]

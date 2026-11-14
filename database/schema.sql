@@ -23,6 +23,13 @@ CREATE TABLE periods (
 -- Only one active period at a time
 CREATE UNIQUE INDEX one_active_period ON periods (is_active) WHERE is_active = TRUE;
 
+CREATE TABLE match_point_configs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    value INT NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+INSERT INTO match_point_configs (value) VALUES (20), (15), (10);
+
 CREATE TABLE matches (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     period_id UUID NOT NULL REFERENCES periods(id),
@@ -32,6 +39,7 @@ CREATE TABLE matches (
     team2_p2 UUID NOT NULL REFERENCES players(id),
     team1_score INT NOT NULL CHECK (team1_score >= 0),
     team2_score INT NOT NULL CHECK (team2_score >= 0),
+    match_point INT NOT NULL DEFAULT 20,
     played_at TIMESTAMPTZ DEFAULT NOW(),
     submitted_by UUID NOT NULL REFERENCES players(id),
     CONSTRAINT distinct_players CHECK (

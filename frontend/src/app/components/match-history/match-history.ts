@@ -25,6 +25,8 @@ export class MatchHistoryComponent implements OnInit {
   players: Player[] = [];
   periods: Period[] = [];
   selectedPeriodId = '';
+  editingId: string | null = null;
+  editScores = { team1Score: 0, team2Score: 0 };
 
   async ngOnInit(): Promise<void> {
     [this.players, this.periods] = await Promise.all([
@@ -49,6 +51,22 @@ export class MatchHistoryComponent implements OnInit {
 
   name(id: string): string {
     return this.players.find(p => p.id === id)?.name ?? '?';
+  }
+
+  startEdit(m: Match): void {
+    this.editingId = m.id;
+    this.editScores = { team1Score: m.team1Score, team2Score: m.team2Score };
+  }
+
+  cancelEdit(): void {
+    this.editingId = null;
+  }
+
+  async saveEdit(m: Match): Promise<void> {
+    await this.matchService.updateMatch(m.id, this.editScores.team1Score, this.editScores.team2Score);
+    this.editingId = null;
+    await this.loadMatches();
+    this.cdr.detectChanges();
   }
 
   async deleteMatch(id: string): Promise<void> {

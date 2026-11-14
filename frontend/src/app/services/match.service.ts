@@ -15,11 +15,19 @@ export class MatchService {
     return this.api.post('/api/matches', dto);
   }
 
+  updateMatch(id: string, team1Score: number, team2Score: number): Promise<void> {
+    return this.api.put(`/api/matches/${id}`, { team1Score, team2Score });
+  }
+
   deleteMatch(id: string): Promise<void> {
     return this.api.delete(`/api/matches/${id}`);
   }
 
   getPlayers(): Promise<Player[]> {
     return this.api.get('/api/players');
+  }
+
+  getMatchPointConfigs(): Promise<number[]> {
+    return this.api.get('/api/match-point-configs');
   }
 }
