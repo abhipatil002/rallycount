@@ -14,9 +14,9 @@ public class MatchRepository(IConfiguration config)
         using var conn = Conn();
         return await conn.QuerySingleAsync<Match>(
             @"INSERT INTO matches (period_id, team1_p1, team1_p2, team2_p1, team2_p2, team1_score, team2_score, match_point, submitted_by)
-              VALUES (@PeriodId, @Team1P1, @Team1P2, @Team2P1, @Team2P2, @Team1Score, @Team2Score, @MatchPoint, @submittedBy)
+              VALUES (@PeriodId, @Team1P1, @Team1P2, @Team2P1, @Team2P2, @Team1Score, @Team2Score, @matchPoint, @submittedBy)
               RETURNING *",
-            new { dto.PeriodId, dto.Team1P1, dto.Team1P2, dto.Team2P1, dto.Team2P2, dto.Team1Score, dto.Team2Score, submittedBy });
+            new { dto.PeriodId, dto.Team1P1, dto.Team1P2, dto.Team2P1, dto.Team2P2, dto.Team1Score, dto.Team2Score, matchPoint = dto.MatchPoint, submittedBy });
     }
 
     public async Task<IEnumerable<Match>> GetByPeriod(Guid periodId)
