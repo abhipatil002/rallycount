@@ -66,8 +66,8 @@ export class MatchFormComponent implements OnInit {
       this.cdr.detectChanges();
       return;
     }
-    const team1Score = winner === '1' ? matchPoint : loserScore;
-    const team2Score = winner === '2' ? matchPoint : loserScore;
+    const team1Score = winner === '1' ? matchPoint + 1 : loserScore;
+    const team2Score = winner === '2' ? matchPoint + 1 : loserScore;
     this.submitting = true;
     await this.matchService.createMatch({ periodId: this.activePeriodId, team1P1, team1P2, team2P1, team2P2, team1Score, team2Score, matchPoint });
     this.router.navigate(['/leaderboard']);
