@@ -66,6 +66,11 @@ export class MatchFormComponent implements OnInit {
       this.cdr.detectChanges();
       return;
     }
+    if (loserScore > matchPoint) {
+      this.error = `Loser's score can't exceed the match point (${matchPoint}).`;
+      this.cdr.detectChanges();
+      return;
+    }
     const team1Score = winner === '1' ? matchPoint + 1 : loserScore;
     const team2Score = winner === '2' ? matchPoint + 1 : loserScore;
     this.submitting = true;

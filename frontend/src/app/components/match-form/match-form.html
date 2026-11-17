@@ -52,7 +52,7 @@
 
   <div class="loser-score-row">
     <label>📉 Loser's score</label>
-    <input type="number" [(ngModel)]="form.loserScore" min="0" placeholder="0">
+    <input type="number" [(ngModel)]="form.loserScore" min="0" [max]="form.matchPoint" placeholder="0">
   </div>
 
   <div class="match-point-row">
