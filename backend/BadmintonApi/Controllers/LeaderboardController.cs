@@ -10,6 +10,8 @@ namespace BadmintonApi.Controllers;
 public class LeaderboardController(LeaderboardRepository leaderboard) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] Guid periodId) =>
-        Ok(await leaderboard.GetByPeriod(periodId));
+    public async Task<IActionResult> Get([FromQuery] Guid? periodId) =>
+        Ok(periodId.HasValue
+            ? await leaderboard.GetByPeriod(periodId.Value)
+            : await leaderboard.GetOverall());
 }

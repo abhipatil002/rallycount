@@ -7,8 +7,9 @@ import { Period } from '../models/period.model';
 export class LeaderboardService {
   private api = inject(ApiService);
 
-  getLeaderboard(periodId: string): Promise<LeaderboardEntry[]> {
-    return this.api.get(`/api/leaderboard?periodId=${periodId}`);
+  getLeaderboard(periodId: string | null): Promise<LeaderboardEntry[]> {
+    const url = periodId ? `/api/leaderboard?periodId=${periodId}` : '/api/leaderboard';
+    return this.api.get(url);
   }
 
   getPeriods(): Promise<Period[]> {

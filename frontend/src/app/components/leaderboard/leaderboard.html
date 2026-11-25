@@ -23,6 +23,7 @@
   <div class="period-row">
     <span class="period-label">📅</span>
     <select [(ngModel)]="selectedPeriodId" (ngModelChange)="onPeriodChange()">
+      <option value="">🌐 Overall (All Periods)</option>
       @for (p of periods; track p.id) {
         <option [value]="p.id">{{ p.label }} {{ p.isActive ? '(active)' : '' }}</option>
       }

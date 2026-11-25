@@ -11,3 +11,6 @@ frontend/.angular/
 # Env / secrets
 appsettings.Development.json
 *.env
+
+# Private project context (contains secrets)
+RALLYCOUNT.md

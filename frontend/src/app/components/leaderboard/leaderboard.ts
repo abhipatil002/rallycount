@@ -31,7 +31,9 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     this.selectedPeriodId = active.id;
     await this.loadLeaderboard();
     this.cdr.detectChanges();
-    await this.signalr.connect(this.selectedPeriodId, (data) => { this.entries = data; this.cdr.detectChanges(); });
+    await this.signalr.connect(this.selectedPeriodId, (data) => {
+      if (this.selectedPeriodId) { this.entries = data; this.cdr.detectChanges(); }
+    });
   }
 
   async ngOnDestroy(): Promise<void> {
@@ -44,7 +46,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   }
 
   private async loadLeaderboard(): Promise<void> {
-    this.entries = await this.lbService.getLeaderboard(this.selectedPeriodId);
+    this.entries = await this.lbService.getLeaderboard(this.selectedPeriodId || null);
   }
 
   get loser(): LeaderboardEntry | null {
